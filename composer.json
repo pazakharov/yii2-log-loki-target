@@ -1,0 +1,40 @@
+{
+    "name": "pazakharov/yii2-log-loki-target",
+    "description": "Loki log target",
+    "type": "yii2-extension",
+    "keywords": [
+        "yii2",
+        "loki"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pavel Zakharov",
+            "email": "p.a.zakharov@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "yidas/yii2-composer-bower-skip": "~2.0.13",
+        "yiisoft/yii2": "~2.0.45",
+        "yiithings/yii2-dotenv": "^1.0"
+    },
+    "require-dev": {
+        "codeception/codeception": "^4.2",
+        "codeception/module-yii2": "^1.0",
+        "codeception/module-asserts": "^1.0",
+        "codeception/module-phpbrowser": "^1.0.0",
+        "yiisoft/yii2-gii": "^2.2",
+        "squizlabs/php_codesniffer": "3.*"
+    },
+    "scripts": {
+        "phpcs": "phpcs --standard=./phpcs.xml  ./",
+        "phpcbf": "phpcbf --standard=./phpcs.xml  ./"
+    },
+    "autoload": {
+        "psr-4": {
+            "pazakharov\\yii2\\": "src/",
+            "pazakharov\\yii2\\tests\\": "tests/"
+        }
+    }
+}
