@@ -7,4 +7,10 @@ modules:
     enabled:
         - Asserts
         - \Helper\Unit
-    step_decorators: ~        
+        - Yii2:
+              part: [orm, fixtures]
+    config:
+        Yii2:
+            configFile: "tests/config/yii2.php"
+            applicationClass: "yii\\console\\Application"
+    step_decorators: ~
