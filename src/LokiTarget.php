@@ -63,10 +63,10 @@ class LokiTarget extends Target
                 [
                     'stream' => [
                         'label' => $this->label,
-                    ]
+                    ],
+                    'values' => $data,
                 ],
             ],
-            'values' => $data,
         ];
         $this->requestToLoki($request);
     }
@@ -94,7 +94,7 @@ class LokiTarget extends Target
         }
         return [
             number_format($timestamp * 1000000000, 0, '.', ''),
-            json_encode([
+            Json::encode([
                 'level' => Logger::getLevelName($level),
                 'category' => $category,
                 'log_time' => $timestamp,
