@@ -27,7 +27,7 @@ class LokiTarget extends Target
      */
     public $lokiUrl;
 
-    public $labels = [];
+    public $label = '';
 
     /**
      * formatMessageCallback
@@ -58,7 +58,17 @@ class LokiTarget extends Target
         foreach ($this->messages as $message) {
             $data[] = $this->formatMessage($message);
         }
-        $this->requestToLoki($data);
+        $request = [
+            'streams' => [
+                [
+                    'stream' => [
+                        'label' => $this->label,
+                    ]
+                ],
+            ],
+            'values' => $data,
+        ];
+        $this->requestToLoki($request);
     }
 
     /**
@@ -82,14 +92,16 @@ class LokiTarget extends Target
                 $text = VarDumper::export($text);
             }
         }
-        return Json::encode([
-            'level' => Logger::getLevelName($level),
-            'category' => $category,
-            'log_time' => $timestamp,
-            'prefix' => $this->getMessagePrefix($message),
-            'message' => $text,
-            'labels' => $this->labels,
-        ]);
+        return [
+            number_format($timestamp * 1000000000, 0, '.', ''),
+            json_encode([
+                'level' => Logger::getLevelName($level),
+                'category' => $category,
+                'log_time' => $timestamp,
+                'prefix' => $this->getMessagePrefix($message),
+                'message' => $text,
+            ])
+        ];
     }
 
     /**
@@ -101,7 +113,11 @@ class LokiTarget extends Target
      */
     public function requestToLoki(array $data)
     {
-        $response = $this->client->post($this->lokiUrl, $data)->send();
+        try {
+            $response = $this->client->post($this->lokiUrl, $data)->send();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
         if (!$response->isOk) {
             throw new LogRuntimeException('Unable to export log to Loki');
         }

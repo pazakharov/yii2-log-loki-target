@@ -15,7 +15,7 @@ add the log as target:
                 'loki' => [
                     'class' => \pazakharov\yii2\LokiTarget::class,
                     'levels' => ['warning'],
-                    'labels' => ['test', 'loki'],
+                    'label' => 'loki',
                     'lokiUrl' => '/api/v1/push',
                     'client' => [
                         'class' => \yii\httpclient\Client::class,

@@ -52,7 +52,7 @@ class LokiTargetTest extends \Codeception\Test\Unit
                 'loki' => [
                     'class' => LokiTarget::class,
                     'levels' => ['warning'],
-                    'labels' => ['test', 'loki'],
+                    'label' => 'test',
                     'lokiUrl' => $lokiUrl,
                     'client' => $client,
                 ],
